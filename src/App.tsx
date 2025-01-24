@@ -1,6 +1,5 @@
-import React, { useRef, useState, useEffect } from 'react';
-import { select } from 'd3-selection';
-import { drag } from 'd3-drag';
+import React from 'react';
+import Shape from './Shape';
 
 interface GridProps {
   width: number;
@@ -42,65 +41,30 @@ const Grid: React.FC<GridProps> = ({ width, height, gridSize }) => {
   return <g>{gridLines}</g>;
 };
 
-interface ShapeProps {
-  size: number;
-}
-
-const Shape: React.FC<ShapeProps> = ({ size }) => {
-  return (
-    <g>
-      <rect width={size} height={size} />
-      <rect width={size} height={size} x={size} />
-      <rect width={size} height={size} x={size} y={size} />
-      <rect width={size} height={size} x={size*2} y={size*2} />
-    </g>
-  );
-};
-
 const App: React.FC = () => {
-  const [position, setPosition] = useState({ x: 50, y: 50 });
+  // TODO: Allow user to move different shapes at a time and not just 1
   const gridSize = 50;
-  const shapeSize = 50;
   const width = 500;
   const height = 500;
-  const shapeRef = useRef<SVGGElement>(null);
 
-  const handleDrag = (event: any) => { 
-    const [x, y] = snapToGrid(event.x, event.y);
-    setPosition({ x, y });
-  };
+  const shape1 = [
+    [0, 0],
+    [1, 0],
+    [1, 1],
+    [2, 0]
+  ]
 
-  const snapToGrid = (x: number, y: number): [number, number] => {
-    return [
-      Math.round(x / gridSize) * gridSize,
-      Math.round(y / gridSize) * gridSize,
-    ];
-  };
-
-  useEffect(() => {
-    const svg = select(shapeRef.current?.parentNode); // Select the SVG element
-
-    if (svg.empty()) return; 
-
-    const dragBehavior = drag()
-      .on('drag', handleDrag);
-
-    svg.call(dragBehavior);
-
-    return () => {
-      svg.on('.drag', null); // Remove drag behavior on unmount
-    };
-  }, []); 
+  const shape2 = [
+    [0, 0],
+    [1, 0],
+    [1, 1],
+  ]
 
   return (
     <svg width={width} height={height}>
       <Grid width={width} height={height} gridSize={gridSize} />
-      <g 
-        ref={shapeRef} 
-        transform={`translate(${position.x}, ${position.y})`} 
-      >
-        <Shape size={shapeSize} />
-      </g>
+      <Shape gridSize={gridSize} shape={shape2} size={gridSize} />
+      <Shape gridSize={gridSize} shape={shape1} size={gridSize} />
     </svg>
   );
 };
