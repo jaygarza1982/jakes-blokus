@@ -25,7 +25,6 @@ const Tiles: React.FC<TileProps> = ({ shape, size }) => {
 
 const Shape: React.FC<ShapeProps> = ({ shape, size, gridSize }) => {
   const [position, setPosition] = useState<{ x: number; y: number }>({ x: 0, y: 0 });
-  const [snappedPosition, setSnappedPosition] = useState<{ x: number; y: number }>({ x: 0, y: 0 });
 
   const [isDragging, setIsDragging] = useState(false);
   const [prevMousePosition, setPrevMousePosition] = useState<{ x: number; y: number }>({ x: 0, y: 0 }); 
@@ -39,11 +38,10 @@ const Shape: React.FC<ShapeProps> = ({ shape, size, gridSize }) => {
   };
 
   const handleMouseUp = () => {
-    // Snap on mouse up
-    // const [x, y] = snapToGrid(position.x, position.y);
-    console.log('Snapped', snappedPosition);
-    
-    // setPosition(snappedPosition);
+    setPosition((prevPosition) => {
+      const { x, y } = snapToGrid(prevPosition.x, prevPosition.y);
+      return { x, y };
+    });
 
     setIsDragging(false);
   };
@@ -68,13 +66,7 @@ const Shape: React.FC<ShapeProps> = ({ shape, size, gridSize }) => {
     const deltaX = currentMousePosition.x - prevMousePosition.x;
     const deltaY = currentMousePosition.y - prevMousePosition.y;
 
-    const movedX = position.x + deltaX;
-    const movedY = position.y + deltaY;
-    setPosition({ x: movedX, y: movedY });
-    setSnappedPosition(snapToGrid(movedX, movedY));
-
-    console.log('Snapped', snappedPosition);
-    
+    setPosition({ x: position.x + deltaX, y: position.y + deltaY }); 
     setPrevMousePosition(currentMousePosition); 
   };
 
