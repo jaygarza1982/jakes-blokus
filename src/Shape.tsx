@@ -1,6 +1,4 @@
 import React, { useRef, useState, useEffect } from 'react';
-import { select } from 'd3-selection';
-import { drag } from 'd3-drag';
 
 interface TileProps {
     shape: number[][];
@@ -26,49 +24,71 @@ const Tiles: React.FC<TileProps> = ({ shape, size }) => {
 };
 
 const Shape: React.FC<ShapeProps> = ({ shape, size, gridSize }) => {
-  const [position, setPosition] = useState({ x: 0, y: 0 });
+  const [position, setPosition] = useState<{ x: number; y: number }>({ x: 0, y: 0 });
+  const [snappedPosition, setSnappedPosition] = useState<{ x: number; y: number }>({ x: 0, y: 0 });
+
+  const [isDragging, setIsDragging] = useState(false);
+  const [prevMousePosition, setPrevMousePosition] = useState<{ x: number; y: number }>({ x: 0, y: 0 }); 
   const shapeRef = useRef<SVGGElement>(null);
 
-  const handleDrag = (event: any) => { 
-    const [x, y] = snapToGrid(event.x, event.y);
-    
-    console.log(
-      shape.map(p => [p[0] + x, p[1] + y])
-    );
-
-    setPosition({ x, y });
+  const snapToGrid = (x: number, y: number): {x: number, y: number} => {
+    return {
+      x: Math.round(x / gridSize) * gridSize,
+      y: Math.round(y / gridSize) * gridSize
+    }
   };
 
-  const snapToGrid = (x: number, y: number): [number, number] => {
-    return [
-      Math.round(x / gridSize) * gridSize,
-      Math.round(y / gridSize) * gridSize,
-    ];
+  const handleMouseUp = () => {
+    // Snap on mouse up
+    // const [x, y] = snapToGrid(position.x, position.y);
+    console.log('Snapped', snappedPosition);
+    
+    // setPosition(snappedPosition);
+
+    setIsDragging(false);
   };
 
   useEffect(() => {
-    const svg = select(shapeRef.current?.parentNode); // Select the SVG element
-
-    if (svg.empty()) return; 
-
-    const dragBehavior = drag()
-      .on('drag', handleDrag);
-
-    svg.call(dragBehavior);
+    window.addEventListener('mouseup', handleMouseUp);
 
     return () => {
-      svg.on('.drag', null); // Remove drag behavior on unmount
+      window.removeEventListener('mouseup', handleMouseUp);
     };
   }, []);
 
+  const handleMouseDown = (event: React.MouseEvent<SVGGElement>) => {
+    setIsDragging(true);
+    setPrevMousePosition({ x: event.clientX, y: event.clientY }); 
+  };
+
+  const handleMouseMove = (event: React.MouseEvent<SVGGElement>) => {
+    if (!isDragging) return;
+
+    const currentMousePosition = { x: event.clientX, y: event.clientY };
+    const deltaX = currentMousePosition.x - prevMousePosition.x;
+    const deltaY = currentMousePosition.y - prevMousePosition.y;
+
+    const movedX = position.x + deltaX;
+    const movedY = position.y + deltaY;
+    setPosition({ x: movedX, y: movedY });
+    setSnappedPosition(snapToGrid(movedX, movedY));
+
+    console.log('Snapped', snappedPosition);
+    
+    setPrevMousePosition(currentMousePosition); 
+  };
+
   return (
-      <g 
-        ref={shapeRef} 
-        transform={`translate(${position.x}, ${position.y})`} 
-      >
-        <Tiles shape={shape} size={size} />
-      </g>
+    <g
+      ref={shapeRef}
+      transform={`translate(${position.x}, ${position.y})`}
+      onMouseDown={handleMouseDown}
+      onMouseMove={handleMouseMove}
+    >
+      <Tiles shape={shape} size={size} />
+    </g>
   );
 };
+
 
 export default Shape;
