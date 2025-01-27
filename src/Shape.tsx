@@ -4,25 +4,27 @@ import * as d3 from 'd3';
 interface TileProps {
   shape: number[][];
   size: number;
+  color: string;
 }
 
 interface ShapeProps {
   shape: number[][];
   size: number;
   gridSize: number;
+  color: string;
 }
 
-const Tiles: React.FC<TileProps> = ({ shape, size }) => {
+const Tiles: React.FC<TileProps> = ({ shape, size, color }) => {
   return (
     <g>
       {shape.map((n) => (
-        <rect width={size} height={size} x={size * n[0]} y={size * n[1]} fill="#fff" />
+        <rect width={size} height={size} x={size * n[0]} y={size * n[1]} fill={color} />
       ))}
     </g>
   );
 };
 
-const Shape: React.FC<ShapeProps> = ({ shape, size, gridSize }) => {
+const Shape: React.FC<ShapeProps> = ({ shape, size, gridSize, color }) => {
   const [position, setPosition] = useState<{ x: number; y: number }>({ x: 0, y: 0 });
   const shapeRef = useRef<SVGGElement>(null);
 
@@ -62,7 +64,7 @@ const Shape: React.FC<ShapeProps> = ({ shape, size, gridSize }) => {
       ref={shapeRef}
       transform={`translate(${position.x}, ${position.y})`}
     >
-      <Tiles shape={shape} size={size} />
+      <Tiles shape={shape} size={size} color={color} />
     </g>
   );
 };

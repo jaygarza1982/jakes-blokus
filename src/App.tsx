@@ -42,7 +42,6 @@ const Grid: React.FC<GridProps> = ({ width, height, gridSize }) => {
 };
 
 const App: React.FC = () => {
-  // TODO: Allow user to move different shapes at a time and not just 1
   const gridSize = 50;
   const width = 500;
   const height = 500;
@@ -63,8 +62,8 @@ const App: React.FC = () => {
   return (
     <svg width={width} height={height}>
       <Grid width={width} height={height} gridSize={gridSize} />
-      <Shape gridSize={gridSize} shape={shape2} size={gridSize} />
-      <Shape gridSize={gridSize} shape={shape1} size={gridSize} />
+      <Shape gridSize={gridSize} shape={shape2} size={gridSize} color={'#0ff'} />
+      <Shape gridSize={gridSize} shape={shape1} size={gridSize} color={'#ff0'} />
     </svg>
   );
 };
