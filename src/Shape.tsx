@@ -34,7 +34,7 @@ const Shape: React.FC<ShapeProps> = ({ shape, size, gridSize }) => {
   useEffect(() => {
     if (shapeRef.current) {
       const drag = d3
-        .drag()
+        .drag<SVGGElement, unknown, unknown>()
         .on('start', () => {})
         .on('drag', (event) => {
           setPosition(p => {
@@ -53,7 +53,7 @@ const Shape: React.FC<ShapeProps> = ({ shape, size, gridSize }) => {
           });
         });
 
-      d3.select(shapeRef.current).call(drag);
+      d3.select(shapeRef.current).call(drag); 
     }
   }, []);
 
