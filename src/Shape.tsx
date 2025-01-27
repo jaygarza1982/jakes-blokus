@@ -35,17 +35,22 @@ const Shape: React.FC<ShapeProps> = ({ shape, size, gridSize }) => {
     if (shapeRef.current) {
       const drag = d3
         .drag()
-        .on('start', () => {
-          // Do nothing on drag start
-        })
+        .on('start', () => {})
         .on('drag', (event) => {
-          setPosition({
-            x: snapToGrid(event.x, event.y).x,
-            y: snapToGrid(event.x, event.y).y,
+          setPosition(p => {
+            return {
+              x: p.x + event.dx,
+              y: p.y + event.dy,
+            }
           });
         })
         .on('end', () => {
-          // Do nothing on drag end
+          setPosition(p => {
+            return {
+              x: snapToGrid(p.x, p.y).x,
+              y: snapToGrid(p.x, p.y).y,
+            }
+          });
         });
 
       d3.select(shapeRef.current).call(drag);
