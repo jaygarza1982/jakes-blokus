@@ -1,31 +1,59 @@
-import React from 'react';
-import Shape from './Shape';
-import Grid from './Grid';
+import React, { useState } from 'react';
+import Canvas from './Canvas';
+import GameData from './GameData';
 
 const App: React.FC = () => {
-  const gridSize = 50;
-  const width = 500;
-  const height = 500;
+  const [gameData, setGameData] = useState<GameData>({
+    players: [
+      { id: 'Player 1', color: '#0ff' },
+      { id: 'Player 2', color: '#ff0' }
+    ],
+    blocks: [
+      {
+        playerId: 'Player 1',
+        shape: [
+          [0, 0],
+          [1, 0],
+          [1, 1]
+        ]
+      },
+      {
+        playerId: 'Player 2',
+        shape: [
+          [0, 0],
+          [1, 0],
+          [1, 1],
+          [2, 0]
+        ]
+      }
+    ]
+  });
 
-  const shape1 = [
-    [0, 0],
-    [1, 0],
-    [1, 1],
-    [2, 0]
-  ]
-
-  const shape2 = [
-    [0, 0],
-    [1, 0],
-    [1, 1],
-  ]
+  const addPlayerBlock = (playerId: string) => {
+    return () => {
+      setGameData(g => {
+        return {
+          players: g.players,
+          blocks: [...g.blocks, {
+            playerId: playerId,
+            shape: [
+              [0, 0],
+              [1, 1],
+              [2, 2]
+            ]
+          }]
+        }
+      })
+    }
+  }
 
   return (
-    <svg width={width} height={height}>
-      <Grid width={width} height={height} gridSize={gridSize} />
-      <Shape gridSize={gridSize} shape={shape2} size={gridSize} color={'#0ff'} />
-      <Shape gridSize={gridSize} shape={shape1} size={gridSize} color={'#ff0'} />
-    </svg>
+    <>
+      <Canvas gameData={gameData}/>
+      <br />
+      <button onClick={addPlayerBlock('Player 1')}>Add player 1 block</button>
+      <button onClick={addPlayerBlock('Player 2')}>Add player 2 block</button>
+    </>
   );
 };
 
