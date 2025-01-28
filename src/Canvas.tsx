@@ -1,16 +1,15 @@
 import React from 'react';
 import Shape from './Shape';
 import Grid from './Grid';
-import GameData from './GameData';
+import { useRecoilValue } from 'recoil';
+import { GameDataAtom } from './atoms/GameData';
 
-interface GameDataProps {
-  gameData: GameData;
-}
-
-const Canvas: React.FC<GameDataProps> = ({ gameData }) => {
+const Canvas: React.FC = () => {
   const gridSize = 50;
   const width = 500;
   const height = 500;
+
+  const gameData = useRecoilValue(GameDataAtom);
 
   return (
     <svg width={width} height={height}>
@@ -22,7 +21,7 @@ const Canvas: React.FC<GameDataProps> = ({ gameData }) => {
             gridSize={gridSize}
             size={gridSize}
             shape={b.shape}
-            color={gameData.players.find(p => p.id == b.playerId)?.color ?? '#fff'}
+            playerId={b.playerId}
           />
         })
       }

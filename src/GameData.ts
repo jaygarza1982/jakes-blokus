@@ -11,6 +11,7 @@ interface Block {
 interface GameData {
     blocks: Block[];
     players: Player[];
+    grid: Map<number[][], string>;
 }
 
 export default GameData;

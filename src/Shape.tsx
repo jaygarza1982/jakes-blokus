@@ -1,20 +1,25 @@
 import React, { useRef, useState, useEffect } from 'react';
 import * as d3 from 'd3';
+import { useRecoilValue } from 'recoil';
+import { GameDataAtom } from './atoms/GameData';
 
 interface TileProps {
   shape: number[][];
   size: number;
-  color: string;
+  playerId: string;
 }
 
 interface ShapeProps {
   shape: number[][];
   size: number;
   gridSize: number;
-  color: string;
+  playerId: string;
 }
 
-const Tiles: React.FC<TileProps> = ({ shape, size, color }) => {
+const Tiles: React.FC<TileProps> = ({ shape, size, playerId }) => {
+  const gameData = useRecoilValue(GameDataAtom);
+  const color = gameData.players.find(p => p.id == playerId)?.color ?? '#fff';
+
   return (
     <g>
       {shape.map((n) => (
@@ -24,7 +29,7 @@ const Tiles: React.FC<TileProps> = ({ shape, size, color }) => {
   );
 };
 
-const Shape: React.FC<ShapeProps> = ({ shape, size, gridSize, color }) => {
+const Shape: React.FC<ShapeProps> = ({ shape, size, gridSize, playerId }) => {
   const [position, setPosition] = useState<{ x: number; y: number }>({ x: 0, y: 0 });
   const shapeRef = useRef<SVGGElement>(null);
 
@@ -71,7 +76,7 @@ const Shape: React.FC<ShapeProps> = ({ shape, size, gridSize, color }) => {
       ref={shapeRef}
       transform={`translate(${position.x}, ${position.y})`}
     >
-      <Tiles shape={shape} size={size} color={color} />
+      <Tiles shape={shape} size={size} playerId={playerId} />
     </g>
   );
 };
