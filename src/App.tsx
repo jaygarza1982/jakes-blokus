@@ -1,10 +1,10 @@
 import React from 'react';
 import Canvas from './Canvas';
-import { useRecoilState } from 'recoil';
+import { useSetRecoilState } from 'recoil';
 import { GameDataAtom } from './atoms/GameData';
 
 const App: React.FC = () => {
-  const [_, setGameData] = useRecoilState(GameDataAtom)
+  const setGameData = useSetRecoilState(GameDataAtom)
 
   const addPlayerBlock = (playerId: string) => {
     return () => {

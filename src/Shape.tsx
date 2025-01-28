@@ -1,6 +1,6 @@
 import React, { useRef, useState, useEffect } from 'react';
 import * as d3 from 'd3';
-import { useRecoilValue } from 'recoil';
+import { useRecoilValue, useSetRecoilState } from 'recoil';
 import { GameDataAtom } from './atoms/GameData';
 
 interface TileProps {
@@ -30,6 +30,8 @@ const Tiles: React.FC<TileProps> = ({ shape, size, playerId }) => {
 };
 
 const Shape: React.FC<ShapeProps> = ({ shape, size, gridSize, playerId }) => {
+  const setGameData = useSetRecoilState(GameDataAtom);
+
   const [position, setPosition] = useState<{ x: number; y: number }>({ x: 0, y: 0 });
   const shapeRef = useRef<SVGGElement>(null);
 
@@ -59,9 +61,24 @@ const Shape: React.FC<ShapeProps> = ({ shape, size, gridSize, playerId }) => {
             }
 
             // Get shape position on map and print
-            console.log(shape.map(
+            const shapeGridPositions = shape.map(
               p => [(p[0] * gridSize) + snapped.x, (p[1] * gridSize) + snapped.y]
-            ));
+            );
+            console.log(shapeGridPositions);
+
+            shapeGridPositions.forEach(p => {
+              setGameData(g => {
+                console.log(g);
+                const grid = g.grid
+                grid.set(JSON.stringify(p), playerId);
+
+                return {
+                  grid: grid,
+                  players: g.players,
+                  blocks: g.blocks
+                }
+              })
+            })
 
             return snapped
           });
