@@ -48,10 +48,17 @@ const Shape: React.FC<ShapeProps> = ({ shape, size, gridSize, color }) => {
         })
         .on('end', () => {
           setPosition(p => {
-            return {
+            const snapped = {
               x: snapToGrid(p.x, p.y).x,
               y: snapToGrid(p.x, p.y).y,
             }
+
+            // Get shape position on map and print
+            console.log(shape.map(
+              p => [(p[0] * gridSize) + snapped.x, (p[1] * gridSize) + snapped.y]
+            ));
+
+            return snapped
           });
         });
 
