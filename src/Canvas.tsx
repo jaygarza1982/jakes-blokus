@@ -17,11 +17,10 @@ const Canvas: React.FC = () => {
       {
         gameData.blocks.map(b => {
           return <Shape
-            key={JSON.stringify(b)}
+            key={`block-${b.blockId}`}
             gridSize={gridSize}
             size={gridSize}
-            shape={b.shape}
-            playerId={b.playerId}
+            block={b}
           />
         })
       }

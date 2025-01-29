@@ -10,15 +10,17 @@ const App: React.FC = () => {
     return () => {
       setGameData(g => {
         return {
-          grid: g.grid,
           players: g.players,
           blocks: [...g.blocks, {
+            blockId: '3',
             playerId: playerId,
             shape: [
               [0, 0],
               [1, 1],
               [2, 2]
-            ]
+            ],
+            x: 100,
+            y: 100
           }]
         }
       })
