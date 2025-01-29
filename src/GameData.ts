@@ -4,14 +4,16 @@ interface Player {
 }
 
 interface Block {
+    blockId: string;
     playerId: string;
     shape: number[][];
+    x: number;
+    y: number;
 }
 
 interface GameData {
     blocks: Block[];
     players: Player[];
-    grid: Map<number[][], string>;
 }
 
-export default GameData;
+export type {GameData, Block};

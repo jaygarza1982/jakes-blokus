@@ -1,24 +1,26 @@
 import React from 'react';
 import Canvas from './Canvas';
-import { useRecoilState } from 'recoil';
+import { useSetRecoilState } from 'recoil';
 import { GameDataAtom } from './atoms/GameData';
 
 const App: React.FC = () => {
-  const [_, setGameData] = useRecoilState(GameDataAtom)
+  const setGameData = useSetRecoilState(GameDataAtom)
 
   const addPlayerBlock = (playerId: string) => {
     return () => {
       setGameData(g => {
         return {
-          grid: g.grid,
           players: g.players,
           blocks: [...g.blocks, {
+            blockId: '3',
             playerId: playerId,
             shape: [
               [0, 0],
               [1, 1],
               [2, 2]
-            ]
+            ],
+            x: 100,
+            y: 100
           }]
         }
       })
