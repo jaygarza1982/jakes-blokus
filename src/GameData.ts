@@ -9,6 +9,7 @@ interface Block {
     shape: number[][];
     x: number;
     y: number;
+    selected: boolean;
 }
 
 interface GameData {

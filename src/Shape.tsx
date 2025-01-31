@@ -1,8 +1,8 @@
 import React, { useRef, useState, useEffect } from 'react';
 import * as d3 from 'd3';
-import { useRecoilValue, useSetRecoilState } from 'recoil';
+import { useRecoilState, useRecoilValue } from 'recoil';
 import { GameDataAtom } from './atoms/GameData';
-import { Block } from './GameData';
+import { Block, GameData } from './GameData';
 
 interface TileProps {
   size: number;
@@ -22,14 +22,14 @@ const Tiles: React.FC<TileProps> = ({ size, block }) => {
   return (
     <g>
       {block.shape.map((n, i) => (
-        <rect key={`tile-${block.blockId}-${i}`} width={size} height={size} x={size * n[0]} y={size * n[1]} fill={color} />
+        <rect key={`tile-${block.blockId}-${i}`} width={size} height={size} x={size * n[0]} y={size * n[1]} fill={block.selected ? '#fff' : color} />
       ))}
     </g>
   );
 };
 
 const Shape: React.FC<ShapeProps> = (props: ShapeProps) => {
-  const setGameData = useSetRecoilState(GameDataAtom);
+  const [gameData, setGameData] = useRecoilState<GameData>(GameDataAtom);
 
   // Not a source of truth position. This is needed for rendering the drag
   // Logic will be done later for setting the game state, which would be the source of truth
@@ -42,6 +42,9 @@ const Shape: React.FC<ShapeProps> = (props: ShapeProps) => {
   });
 
   useEffect(() => {
+    // Only allow movement of selected blocks
+    if (!props.block.selected) return;
+
     if (shapeRef.current) {
       const drag = d3
         .drag<SVGGElement, unknown, unknown>()
@@ -94,7 +97,11 @@ const Shape: React.FC<ShapeProps> = (props: ShapeProps) => {
 
       d3.select(shapeRef.current).call(drag); 
     }
-  }, []);
+
+    return () => {
+      d3.select(shapeRef.current).on('.drag', null);
+    }
+  }, [gameData]);
 
   return (
     <g

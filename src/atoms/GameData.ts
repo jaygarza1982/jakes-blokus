@@ -33,7 +33,8 @@ export const GameDataAtom = atom<GameData>({
                 ]
             ],
             "x": 0,
-            "y": 0
+            "y": 0,
+            selected: true
         },
         {
             "blockId": "2",
@@ -57,7 +58,8 @@ export const GameDataAtom = atom<GameData>({
                 ]
             ],
             "x": 200,
-            "y": 200
+            "y": 200,
+            selected: false
         },
         {
             "blockId": "3",
@@ -77,7 +79,8 @@ export const GameDataAtom = atom<GameData>({
                 ]
             ],
             "x": 100,
-            "y": 300
+            "y": 300,
+            selected: false
         }
     ]
 }
