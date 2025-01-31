@@ -31,10 +31,25 @@ const App: React.FC = () => {
       <Canvas />
       <br />
       <button onClick={placeSelectedBlock}>Place Block</button>
-      <button onClick={addPlayerBlock('Player 1', [[0, 0], [0, 1], [0, 2], [1, 2], [2, 2]])}>Add player 1 L block</button>
-      <button onClick={addPlayerBlock('Player 1', [])}>Add player 1 T block</button>
-      <button onClick={addPlayerBlock('Player 2', [[0, 0], [0, 1], [0, 2], [1, 2], [2, 2]])}>Add player 2 L block</button>
-      <button onClick={addPlayerBlock('Player 2', [])}>Add player 2 T block</button>
+      
+      <button onClick={addPlayerBlock('Player 1', [[0, 0]])}>Add player 1 block</button>
+      <br />
+
+      <button onClick={addPlayerBlock('Player 1', [[0, 0], [1, 0]])}>Add player 1 block</button>
+      <br />
+
+      <button onClick={addPlayerBlock('Player 1', [[0, 0], [1, 0], [1, 1]])}>Add player 1 block</button>
+      <button onClick={addPlayerBlock('Player 1', [[0, 0], [1, 0], [2, 0]])}>Add player 1 block</button>
+      <br />
+
+      <button onClick={addPlayerBlock('Player 1', [[0, 0], [1, 0], [1, 1], [2, 1]])}>Add player Z block</button>
+      <button onClick={addPlayerBlock('Player 1', [[0, 0], [1, 0], [0, 1], [1, 1]])}>Add player cube block</button>
+      <button onClick={addPlayerBlock('Player 1', [[0, 0], [1, 0], [2, 0], [1, 1]])}>Add player 1 block</button>
+      <button onClick={addPlayerBlock('Player 1', [[0, 0], [1, 0], [2, 0], [2, 1]])}>Add player 1 block</button>
+      <button onClick={addPlayerBlock('Player 1', [[0, 0], [1, 0], [2, 0], [3, 0]])}>Add player 1 block</button>
+      <br />
+
+      {/* TODO: 5 piece blocks */}
     </>
   );
 };
