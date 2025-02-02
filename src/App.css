@@ -5,6 +5,11 @@
   text-align: center;
 }
 
+.block-img {
+  width: 225px;
+  height: 225px;
+}
+
 .logo {
   height: 6em;
   padding: 1.5em;

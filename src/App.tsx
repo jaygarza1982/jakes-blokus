@@ -5,6 +5,7 @@ import { GameDataAtom } from './atoms/GameData';
 import createPlayerBlock from './util/CreateBlock';
 import { GameData } from './GameData';
 import placePlayerBlock from './util/PlaceBlock';
+import "./App.css"
 
 const App: React.FC = () => {
   const setGameData = useSetRecoilState<GameData>(GameDataAtom);
@@ -32,15 +33,14 @@ const App: React.FC = () => {
       <br />
       <button onClick={placeSelectedBlock}>Place Block</button>
       
-      {/* TODO: Images for blocks */}
-      <button onClick={addPlayerBlock('Player 1', [[0, 0]])}>Add player 1 block</button>
+      <img className='block-img' src='/1.png' onClick={addPlayerBlock('Player 1', [[0, 0]])} />
       <br />
 
-      <button onClick={addPlayerBlock('Player 1', [[0, 0], [1, 0]])}>Add player 2 block</button>
+      <img className='block-img' src='/2.png' onClick={addPlayerBlock('Player 1', [[0, 0], [1, 0]])} />
       <br />
 
-      <button onClick={addPlayerBlock('Player 1', [[0, 0], [1, 0], [1, 1]])}>Add player 3 block</button>
-      <button onClick={addPlayerBlock('Player 1', [[0, 0], [1, 0], [2, 0]])}>Add player 4 block</button>
+      <img className='block-img' src='/3.png' onClick={addPlayerBlock('Player 1', [[0, 0], [1, 0], [1, 1]])} />
+      <img className='block-img' src='/4.png' onClick={addPlayerBlock('Player 1', [[0, 0], [1, 0], [2, 0]])} />
       <br />
 
       {/* TODO: Remake 5 to spec */}
