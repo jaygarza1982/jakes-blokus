@@ -64,12 +64,6 @@ const Shape: React.FC<ShapeProps> = (props: ShapeProps) => {
               y: snapToGrid(prevPos.x, prevPos.y).y,
             }
 
-            // Get shape position on map and print
-            const shapeGridPositions = props.block.shape.map(
-              p => [(p[0] * props.gridSize) + snapped.x, (p[1] * props.gridSize) + snapped.y]
-            );
-            console.log(shapeGridPositions);
-
             setGameData(g => {
               console.log(g.blocks);
               const blocks = [...g.blocks.filter(b => b.blockId != props.block.blockId)];
@@ -78,8 +72,6 @@ const Shape: React.FC<ShapeProps> = (props: ShapeProps) => {
                 x: snapped.x,
                 y: snapped.y
               }]
-              
-              console.log('new blocks', newBlocks);
 
               const newState = {
                 players: g.players,
