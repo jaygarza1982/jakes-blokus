@@ -10,6 +10,31 @@ const getBlockGridPositions = (block: Block): number[][] => {
   );
 }
 
+const placingBlockNotTouchingOwnedBlocks = (placedBlocks: Block[], block: Block): boolean => {
+  const ourPlacedBlocks = placedBlocks.filter(b => b.playerId == block.playerId);
+  
+  const placingPositionStrings: string[] = getBlockGridPositions(block).map(i => JSON.stringify(i));
+
+  for (let i = 0; i < ourPlacedBlocks.length; i++) {
+    const currentPlacedPositions = getBlockGridPositions(ourPlacedBlocks[i]);
+    
+    // All positions up, down, left, right of current block. Make these values unique
+    const currentTouchingPositions: string[] = Array.from(new Set(currentPlacedPositions.map(p => [
+      [p[0] + gridSize, p[1]],
+      [p[0] - gridSize, p[1]],
+      [p[0], p[1] + gridSize],
+      [p[0], p[1] - gridSize]
+    ]).flat().map(i => JSON.stringify(i))));
+
+    const currentAndPlacingPositions = currentTouchingPositions.concat(placingPositionStrings);
+    
+    // Works because touching is unique, adding our new placing should yield unique as well
+    if (new Set(currentAndPlacingPositions).size != currentAndPlacingPositions.length) return false;
+  }
+
+  return true;
+}
+
 // Checks for in game bounds
 // TODO: Check that not touching same player-owned blocks in directly left, right, up, and down
 // TODO: Placing block must touch diagonal player-owned block at least once
@@ -27,7 +52,7 @@ const canPlaceBlock = (placedBlocks: Block[], block: Block): boolean => {
   const allPositionStrings = placedPositionStrings.concat(blockPositionStrings);  
   const newBlockNotOverlappingExisting = allPositionStrings.length == new Set(allPositionStrings).size;
 
-  return allInBounds && newBlockNotOverlappingExisting;
+  return allInBounds && newBlockNotOverlappingExisting && placingBlockNotTouchingOwnedBlocks(placedBlocks, block);
 }
 
 const placePlayerBlock = (g: GameData, block: Block | undefined): GameData => {
