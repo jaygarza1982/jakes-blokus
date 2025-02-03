@@ -32,47 +32,29 @@ const App: React.FC = () => {
       <Canvas />
       <br />
       <button onClick={placeSelectedBlock}>Place Block</button>
-      
+      <br />
       <img className='block-img' src='/1.png' onClick={addPlayerBlock('Player 1', [[0, 0]])} />
-      <br />
-
       <img className='block-img' src='/2.png' onClick={addPlayerBlock('Player 1', [[0, 0], [1, 0]])} />
-      <br />
-
       <img className='block-img' src='/3.png' onClick={addPlayerBlock('Player 1', [[0, 0], [1, 0], [1, 1]])} />
       <img className='block-img' src='/4.png' onClick={addPlayerBlock('Player 1', [[0, 0], [1, 0], [2, 0]])} />
-      <br />
-
-      {/* TODO: Remake 5 to spec */}
-      <button onClick={addPlayerBlock('Player 1', [[0, 0], [1, 0], [1, 1], [2, 1]])}>Add player 5 block</button>
-
-      <button onClick={addPlayerBlock('Player 1', [[0, 0], [1, 0], [0, 1], [1, 1]])}>Add player 6 block</button>
-      <button onClick={addPlayerBlock('Player 1', [[0, 0], [1, 0], [2, 0], [1, 1]])}>Add player 7 block</button>
-      <button onClick={addPlayerBlock('Player 1', [[0, 0], [1, 0], [2, 0], [2, 1]])}>Add player 8 block</button>
-      <button onClick={addPlayerBlock('Player 1', [[0, 0], [1, 0], [2, 0], [3, 0]])}>Add player 9 block</button>
-      <br />
-
-      <button onClick={addPlayerBlock('Player 1', [[0, 0], [1, 0], [2, 0], [3, 0], [4, 0]])}>Add player 10 block</button>
-      <button onClick={addPlayerBlock('Player 1', [[0, 0], [1, 0], [2, 0], [3, 0], [3, 1]])}>Add player 11 block</button>
-      <button onClick={addPlayerBlock('Player 1', [[0, 0], [0, 1], [0, 2], [-1, 2], [-1, 3]])}>Add player 12 block</button>
-      <button onClick={addPlayerBlock('Player 1', [[0, 0], [0, 1], [0, 2], [-1, 1], [-1, 2]])}>Add player 13 block</button>
-      
-      
-      <button onClick={addPlayerBlock('Player 1', [[0, 0], [0, 1], [0, 2], [-1, 2], [-2, 2]])}>Add player 14 block</button>
-
+      <img className='block-img' src='/5.png' onClick={addPlayerBlock('Player 1', [[0, 0], [1, 0], [1, 1], [2, 1]])} />
+      <img className='block-img' src='/6.png' onClick={addPlayerBlock('Player 1', [[0, 0], [1, 0], [0, 1], [1, 1]])} />
+      <img className='block-img' src='/7.png' onClick={addPlayerBlock('Player 1', [[0, 0], [1, 0], [2, 0], [1, 1]])} />
+      <img className='block-img' src='/8.png' onClick={addPlayerBlock('Player 1', [[0, 0], [1, 0], [2, 0], [2, 1]])} />
+      <img className='block-img' src='/9.png' onClick={addPlayerBlock('Player 1', [[0, 0], [1, 0], [2, 0], [3, 0]])} />
+      <img className='block-img' src='/10.png' onClick={addPlayerBlock('Player 1', [[0, 0], [1, 0], [2, 0], [3, 0], [4, 0]])} />
+      <img className='block-img' src='/11.png' onClick={addPlayerBlock('Player 1', [[0, 0], [1, 0], [2, 0], [3, 0], [3, 1]])} />
+      <img className='block-img' src='/12.png' onClick={addPlayerBlock('Player 1', [[0, 0], [0, 1], [0, 2], [-1, 2], [-1, 3]])} />
+      <img className='block-img' src='/13.png' onClick={addPlayerBlock('Player 1', [[0, 0], [0, 1], [0, 2], [-1, 1], [-1, 2]])} />
+      <img className='block-img' src='/14.png' onClick={addPlayerBlock('Player 1', [[0, 0], [0, 1], [0, 2], [-1, 2], [-2, 2]])} />
       {/* TODO: Translate 15 down and right */}
-      <button onClick={addPlayerBlock('Player 1', [[0, 0], [0, -1], [1, -1], [1, -2], [2, -2]])}>Add player 15 block</button>
-      
-      <button onClick={addPlayerBlock('Player 1', [[0, 0], [1, 0], [1, -1], [1, -2], [2, -2]])}>Add player 16 block</button>
-      <button onClick={addPlayerBlock('Player 1', [[2, 0], [1, 0], [1, -1], [1, -2], [2, -2]])}>Add player 17 block</button>
-      
-      <button onClick={addPlayerBlock('Player 1', [[0, 0], [1, 0], [2, 0], [2, 1], [2, -1]])}>Add player 18 block</button>
-      
-      <button onClick={addPlayerBlock('Player 1', [[0, 0], [1, 0], [1, -1], [1, -2], [2, -1]])}>Add player 19 block</button>
-      
-      <button onClick={addPlayerBlock('Player 1', [[0, 0], [-1, 0], [1, 0], [0, -1], [0, 1]])}>Add player 20 block</button>
-      
-      <button onClick={addPlayerBlock('Player 1', [[0, 0], [1, 0], [2, 0], [3, 0], [1, -1]])}>Add player 21 block</button>
+      <img className='block-img' src='/15.png' onClick={addPlayerBlock('Player 1', [[0, 0], [0, -1], [1, -1], [1, -2], [2, -2]])} />
+      <img className='block-img' src='/16.png' onClick={addPlayerBlock('Player 1', [[0, 0], [1, 0], [1, -1], [1, -2], [2, -2]])} />
+      <img className='block-img' src='/17.png' onClick={addPlayerBlock('Player 1', [[2, 0], [1, 0], [1, -1], [1, -2], [2, -2]])} />
+      <img className='block-img' src='/18.png' onClick={addPlayerBlock('Player 1', [[0, 0], [1, 0], [2, 0], [2, 1], [2, -1]])} />
+      <img className='block-img' src='/19.png' onClick={addPlayerBlock('Player 1', [[0, 0], [1, 0], [1, -1], [1, -2], [2, -1]])} />
+      <img className='block-img' src='/20.png' onClick={addPlayerBlock('Player 1', [[0, 0], [-1, 0], [1, 0], [0, -1], [0, 1]])} />
+      <img className='block-img' src='/21.png' onClick={addPlayerBlock('Player 1', [[0, 0], [1, 0], [2, 0], [3, 0], [1, -1]])} />
     </>
   );
 };
