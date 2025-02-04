@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { useNavigate } from 'react-router';
 import { v4 as uuid } from 'uuid';
 import { PlayerInfo } from './atoms/PlayerInfo';

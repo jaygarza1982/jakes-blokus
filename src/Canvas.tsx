@@ -6,8 +6,8 @@ import { GameDataAtom } from './atoms/GameData';
 
 const Canvas: React.FC = () => {
   const gridSize = 50;
-  const width = 500;
-  const height = 500;
+  const width = 1000;
+  const height = 1000;
 
   const gameData = useRecoilValue(GameDataAtom);
 

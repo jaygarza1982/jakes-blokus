@@ -1,8 +1,8 @@
 import { Block, GameData } from '../GameData';
 
 const gridSize = 50;
-const width = 500;
-const height = 500;
+const width = 1000;
+const height = 1000;
 
 const getBlockGridPositions = (block: Block): number[][] => {
   return block.shape.map(
