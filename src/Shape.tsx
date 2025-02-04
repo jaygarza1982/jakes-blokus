@@ -17,12 +17,12 @@ interface ShapeProps {
 
 const Tiles: React.FC<TileProps> = ({ size, block }) => {
   const gameData = useRecoilValue(GameDataAtom);
-  const color = gameData.players.find(p => p.id == block.playerId)?.color ?? '#fff';
+  const color = gameData.players.find(p => p.id == block.playerId)?.hue ?? 0;
 
   return (
     <g>
       {block.shape.map((n, i) => (
-        <rect key={`tile-${block.blockId}-${i}`} width={size} height={size} x={size * n[0]} y={size * n[1]} fill={block.selected ? '#fff' : color} />
+        <rect key={`tile-${block.blockId}-${i}`} width={size} height={size} x={size * n[0]} y={size * n[1]} fill={block.selected ? '#fff' : `hsl(${color}, 100%, 50%)` } />
       ))}
     </g>
   );
