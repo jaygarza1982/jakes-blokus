@@ -1,6 +1,6 @@
 interface Player {
     id: string;
-    color: string;
+    hue: number;
 }
 
 interface Block {
@@ -18,4 +18,4 @@ interface GameData {
     players: Player[];
 }
 
-export type {GameData, Block};
+export type {GameData, Block, Player};
