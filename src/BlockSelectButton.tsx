@@ -1,5 +1,5 @@
 import React from 'react';
-import { useSetRecoilState } from 'recoil';
+import { useRecoilState } from 'recoil';
 import { GameDataAtom } from './atoms/GameData';
 import createPlayerBlock from './util/CreateBlock';
 import { GameData } from './GameData';
@@ -11,7 +11,7 @@ interface BlockSelectButtonProps {
 }
 
 const BlockSelectButton: React.FC<BlockSelectButtonProps> = (props: BlockSelectButtonProps) => {
-  const setGameData = useSetRecoilState<GameData>(GameDataAtom);
+  const [gameData, setGameData] = useRecoilState<GameData>(GameDataAtom);
 
   const addPlayerBlock = (playerId: string, shape: number[][]) => {
     const x = 0;
@@ -19,9 +19,14 @@ const BlockSelectButton: React.FC<BlockSelectButtonProps> = (props: BlockSelectB
 
     return () => {
       setGameData(g => {
-        return createPlayerBlock(g, playerId, shape, x, y);
+        return createPlayerBlock(g, playerId, shape, x, y, props.blockNumber);
       })
     }
+  }
+
+  // Do not render if we already placed this block number
+  if (gameData.blocks.find(b => b.playerId == props.playerId && b.blockNumber == props.blockNumber)) {
+    return <></>
   }
 
   return (

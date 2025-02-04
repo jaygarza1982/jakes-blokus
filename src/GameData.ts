@@ -5,6 +5,7 @@ interface Player {
 
 interface Block {
     blockId: string;
+    blockNumber: number;
     playerId: string;
     shape: number[][];
     x: number;

@@ -99,6 +99,7 @@ const placePlayerBlock = (g: GameData, block: Block | undefined): GameData => {
     players: g.players,
     blocks: [...allButGivenBlock, {
       blockId: block?.blockId || '',
+      blockNumber: block?.blockNumber || 0,
       playerId: block?.playerId || '',
       selected: false,
       shape: block?.shape || [],
