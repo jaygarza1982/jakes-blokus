@@ -1,19 +1,13 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect } from 'react';
 import { useNavigate } from 'react-router';
 import { v4 as uuid } from 'uuid';
-import { Player } from './GameData';
+import { PlayerInfo } from './atoms/PlayerInfo';
+import { useRecoilState } from 'recoil';
 
 const Welcome: React.FC = () => {
   const navigate = useNavigate();
 
-  const [playerInfo, setPlayerInfo] = useState<Player>(() => {
-    const storedPlayerInfo = localStorage.getItem('playerInfo');
-    return storedPlayerInfo ? JSON.parse(storedPlayerInfo) : { id: '', color: 0 };
-  });
-
-  useEffect(() => {
-    localStorage.setItem('playerInfo', JSON.stringify(playerInfo));
-  }, [playerInfo]);
+  const [playerInfo, setPlayerInfo] = useRecoilState(PlayerInfo);
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = event.target;
@@ -33,11 +27,11 @@ const Welcome: React.FC = () => {
   return (
     <div>
       <form onSubmit={handleSubmit} style={{ display: 'flex', flexDirection: 'column', gap: '10px', padding: '20px' }}>
-        <label htmlFor='displayName'>Display Name</label>
+        <label htmlFor='id'>Display Name</label>
         <input
           type='text'
-          id='displayName'
-          name='displayName'
+          id='id'
+          name='id'
           value={playerInfo.id}
           onChange={handleChange}
           required
