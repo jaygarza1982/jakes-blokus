@@ -1,50 +1,16 @@
-# React + TypeScript + Vite
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+# Jake's Blokus
 
-Currently, two official plugins are available:
+This project aims to emulate the board game Blokus.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## Goals
 
-## Expanding the ESLint configuration
+This project has the following goals:
 
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
+*   **Piece Placement Logic (Complete):**  The game correctly enforces Blokus placement rules, ensuring pieces are placed legally, touching at least one corner of a previously placed piece of the same color, and not overlapping other pieces (including those of the same color). Currently, an honor system is in place for players taking turns :)
+* **Piece Rotations (Work in Progress):**  Players should be able to rotate selected pieces before confirming a placement.
 
-- Configure the top-level `parserOptions` property like this:
+*   **Scoreboard (Complete):** The game accurately calculates and displays the score for each player throughout the duration of the game, based on the number of squares covered by their pieces.
 
-```js
-export default tseslint.config({
-  languageOptions: {
-    // other options...
-    parserOptions: {
-      project: ['./tsconfig.node.json', './tsconfig.app.json'],
-      tsconfigRootDir: import.meta.dirname,
-    },
-  },
-})
-```
-
-- Replace `tseslint.configs.recommended` to `tseslint.configs.recommendedTypeChecked` or `tseslint.configs.strictTypeChecked`
-- Optionally add `...tseslint.configs.stylisticTypeChecked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and update the config:
-
-```js
-// eslint.config.js
-import react from 'eslint-plugin-react'
-
-export default tseslint.config({
-  // Set the react version
-  settings: { react: { version: '18.3' } },
-  plugins: {
-    // Add the react plugin
-    react,
-  },
-  rules: {
-    // other rules...
-    // Enable its recommended rules
-    ...react.configs.recommended.rules,
-    ...react.configs['jsx-runtime'].rules,
-  },
-})
-```
+*   **Player Name and Color Customization (Complete):** Players can customize their names and choose their preferred color before starting the game.
+*   **Game Server (Work in Progress):**  A game server is being developed to allow for multiplayer games over a network.  This feature is still under development.
