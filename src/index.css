@@ -7,6 +7,11 @@ input {
   font-size: 2rem;
 }
 
+.game-container {
+  position: absolute;
+  padding: 2rem;
+}
+
 .scoreboard {
   height: 165px;
   font-size: 2rem;
@@ -45,7 +50,6 @@ a:hover {
 
 body {
   margin: 0;
-  position: absolute;
 }
 
 h1 {

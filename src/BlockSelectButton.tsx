@@ -14,8 +14,8 @@ const BlockSelectButton: React.FC<BlockSelectButtonProps> = (props: BlockSelectB
   const [gameData, setGameData] = useRecoilState<GameData>(GameDataAtom);
 
   const addPlayerBlock = (player: Player, shape: number[][]) => {
-    const x = 0;
-    const y = 0;
+    const x = 500;
+    const y = 500;
 
     return () => {
       setGameData(g => {

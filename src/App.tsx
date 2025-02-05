@@ -4,7 +4,7 @@ import { useRecoilValue, useSetRecoilState } from 'recoil';
 import { GameDataAtom } from './atoms/GameData';
 import { GameData } from './GameData';
 import placePlayerBlock from './util/PlaceBlock';
-import "./App.css"
+import './App.css'
 import BlockSelectButton from './BlockSelectButton';
 import { PlayerInfo } from './atoms/PlayerInfo';
 import Scoreboard from './Scoreboard';
@@ -20,7 +20,7 @@ const App: React.FC = () => {
   }
 
   return (
-    <>
+    <div className='game-container'>
       <Scoreboard />
       <Canvas />
       <br />
@@ -47,7 +47,8 @@ const App: React.FC = () => {
       <BlockSelectButton blockNumber={19} player={playerInfo} blockShape={[[0, 0], [1, 0], [1, -1], [1, -2], [2, -1]]} />
       <BlockSelectButton blockNumber={20} player={playerInfo} blockShape={[[0, 0], [-1, 0], [1, 0], [0, -1], [0, 1]]} />
       <BlockSelectButton blockNumber={21} player={playerInfo} blockShape={[[0, 0], [1, 0], [2, 0], [3, 0], [1, -1]]} />
-    </>
+    </div>
+    
   );
 };
 
