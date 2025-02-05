@@ -7,6 +7,7 @@ import placePlayerBlock from './util/PlaceBlock';
 import "./App.css"
 import BlockSelectButton from './BlockSelectButton';
 import { PlayerInfo } from './atoms/PlayerInfo';
+import Scoreboard from './Scoreboard';
 
 const App: React.FC = () => {
   const setGameData = useSetRecoilState<GameData>(GameDataAtom);
@@ -20,9 +21,10 @@ const App: React.FC = () => {
 
   return (
     <>
+      <Scoreboard />
       <Canvas />
       <br />
-      <button onClick={placeSelectedBlock}>Place Block</button>
+      <button className='place-block-button' style={{ backgroundColor: `hsl(${playerInfo.hue}, 100%, 50%)` }} onClick={placeSelectedBlock}>Place Block</button>
       <br />
       <BlockSelectButton blockNumber={1}  player={playerInfo} blockShape={[[0, 0]]} />
       <BlockSelectButton blockNumber={2}  player={playerInfo} blockShape={[[0, 0], [1, 0]]} />

@@ -29,6 +29,7 @@ const Welcome: React.FC = () => {
       <form onSubmit={handleSubmit} style={{ display: 'flex', flexDirection: 'column', gap: '10px', padding: '20px' }}>
         <label htmlFor='id'>Display Name</label>
         <input
+          autoComplete='off'
           type='text'
           id='id'
           name='id'

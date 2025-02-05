@@ -17,7 +17,7 @@ interface ShapeProps {
 
 const Tiles: React.FC<TileProps> = ({ size, block }) => {
   const gameData = useRecoilValue(GameDataAtom);
-  const color = gameData.players.find(p => p.id == block.playerId)?.hue ?? 0;
+  const color = gameData?.players?.find(p => p.id == block.playerId)?.hue ?? 0;
 
   return (
     <g>

@@ -8,11 +8,11 @@ const createPlayerBlock = (g: GameData, player: Player, shape: number[][], x: nu
 
   const selectedBlock = g.blocks.find(b => b.selected);
 
-  const ourPlayer = g.players.find(p => p.id == player.id);
+  const ourPlayer = g?.players?.find(p => p.id == player.id);
 
   return {
     // Append our player if not found
-    players: ourPlayer ? g.players : g.players.concat([player]),
+    players: ourPlayer ? g.players : g?.players?.concat([player]),
     blocks: [...placedBlocks, {
       blockId: uuid(),
       blockNumber: blockNumber,

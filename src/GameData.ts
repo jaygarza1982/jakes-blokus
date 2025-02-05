@@ -15,7 +15,7 @@ interface Block {
 
 interface GameData {
     blocks: Block[];
-    players: Player[];
+    players: Player[] | undefined;
 }
 
 export type {GameData, Block, Player};

@@ -7,6 +7,18 @@ input {
   font-size: 2rem;
 }
 
+.scoreboard {
+  height: 165px;
+  font-size: 2rem;
+}
+
+.place-block-button {
+  width: 13rem;
+  height: 4rem;
+  color: black;
+  margin: 2rem;
+}
+
 :root {
   font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
   line-height: 1.5;
@@ -33,6 +45,7 @@ a:hover {
 
 body {
   margin: 0;
+  position: absolute;
 }
 
 h1 {
