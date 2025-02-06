@@ -7,22 +7,24 @@ import { Block, GameData } from './GameData';
 interface TileProps {
   size: number;
   block: Block;
+  selected: boolean;
 }
 
 interface ShapeProps {
+  selected: boolean;
   block: Block;
   size: number;
   gridSize: number;
 }
 
-const Tiles: React.FC<TileProps> = ({ size, block }) => {
+const Tiles: React.FC<TileProps> = ({ size, block, selected }) => {
   const gameData = useRecoilValue(GameDataAtom);
   const color = gameData?.players?.find(p => p.id == block.playerId)?.hue ?? 0;
 
   return (
     <g>
       {block.shape.map((n, i) => (
-        <rect key={`tile-${block.blockId}-${i}`} width={size} height={size} x={size * n[0]} y={size * n[1]} fill={block.selected ? '#fff' : `hsl(${color}, 100%, 50%)` } />
+        <rect key={`tile-${block.blockId}-${i}`} width={size} height={size} x={size * n[0]} y={size * n[1]} fill={selected ? '#fff' : `hsl(${color}, 100%, 50%)` } />
       ))}
     </g>
   );
@@ -43,7 +45,7 @@ const Shape: React.FC<ShapeProps> = (props: ShapeProps) => {
 
   useEffect(() => {
     // Only allow movement of selected blocks
-    if (!props.block.selected) return;
+    if (!props.selected) return;
 
     if (shapeRef.current) {
       const drag = d3
@@ -100,7 +102,7 @@ const Shape: React.FC<ShapeProps> = (props: ShapeProps) => {
       ref={shapeRef}
       transform={`translate(${position.x}, ${position.y})`}
     >
-      <Tiles size={props.size} block={props.block} />
+      <Tiles size={props.size} block={props.block} selected={props.selected} />
     </g>
   );
 };

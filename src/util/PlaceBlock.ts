@@ -1,16 +1,17 @@
-import { Block, GameData } from '../GameData';
+import { Block, GameData, SelectedBlock } from '../GameData';
+import { v4 as uuid } from 'uuid';
 
 const gridSize = 50;
 const width = 1000;
 const height = 1000;
 
-const getBlockGridPositions = (block: Block): number[][] => {
+const getBlockGridPositions = (block: Block | SelectedBlock): number[][] => {
   return block.shape.map(
     p => [(p[0] * gridSize) + block.x, (p[1] * gridSize) + block.y]
   );
 }
 
-const placingBlockMustBeDiagonalOfAnotherOwnedBlock = (placedBlocks: Block[], block: Block): boolean => {
+const placingBlockMustBeDiagonalOfAnotherOwnedBlock = (placedBlocks: Block[], block: SelectedBlock): boolean => {
   const ourPlacedBlocks = placedBlocks.filter(b => b.playerId == block.playerId);
 
   // We do not own any blocks yet, so we pass this check
@@ -38,7 +39,7 @@ const placingBlockMustBeDiagonalOfAnotherOwnedBlock = (placedBlocks: Block[], bl
   return false;
 }
 
-const placingBlockNotTouchingOwnedBlocks = (placedBlocks: Block[], block: Block): boolean => {
+const placingBlockNotTouchingOwnedBlocks = (placedBlocks: Block[], block: SelectedBlock): boolean => {
   const ourPlacedBlocks = placedBlocks.filter(b => b.playerId == block.playerId);
   
   const placingPositionStrings: string[] = getBlockGridPositions(block).map(i => JSON.stringify(i));
@@ -66,7 +67,7 @@ const placingBlockNotTouchingOwnedBlocks = (placedBlocks: Block[], block: Block)
 // Checks for in game bounds
 // Checks that not touching same player-owned blocks in directly left, right, up, and down
 // Placing block must touch diagonal player-owned block at least once
-const canPlaceBlock = (placedBlocks: Block[], block: Block): boolean => {
+const canPlaceBlock = (placedBlocks: Block[], block: SelectedBlock): boolean => {
   const blockGridPositions = getBlockGridPositions(block);
 
   const positionsInBounds = blockGridPositions.map(p => !(p[0] < 0 || p[0] >= width || p[1] < 0 || p[1] >= height));
@@ -86,25 +87,22 @@ const canPlaceBlock = (placedBlocks: Block[], block: Block): boolean => {
   placingBlockMustBeDiagonalOfAnotherOwnedBlock(placedBlocks, block);
 }
 
-const placePlayerBlock = (g: GameData, block: Block | undefined): GameData => {
+const placePlayerBlock = (g: GameData, block: SelectedBlock): GameData => {
   // If we are given an undefined value we need to return original game state
   if (!block) return g;
 
-  const allButGivenBlock = g.blocks.filter(b => b.blockId != block?.blockId);
-
   // If we cannot place our block, return original state
-  if (!canPlaceBlock(allButGivenBlock, block)) return g;
+  if (!canPlaceBlock(g.blocks, block)) return g;
 
   return {
     players: g.players,
-    blocks: [...allButGivenBlock, {
-      blockId: block?.blockId || '',
-      blockNumber: block?.blockNumber || 0,
-      playerId: block?.playerId || '',
-      selected: false,
-      shape: block?.shape || [],
-      x: block?.x || 0,
-      y: block?.y || 0
+    blocks: [...g.blocks, {
+      blockId: uuid(),
+      blockNumber: block.blockNumber || 0,
+      playerId: block.playerId || '',
+      shape: block.shape || [],
+      x: block.x || 0,
+      y: block.y || 0
     }]
   }
 }

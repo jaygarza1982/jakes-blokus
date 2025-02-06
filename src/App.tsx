@@ -1,6 +1,6 @@
 import React from 'react';
 import Canvas from './Canvas';
-import { useRecoilValue, useSetRecoilState } from 'recoil';
+import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil';
 import { GameDataAtom } from './atoms/GameData';
 import { GameData } from './GameData';
 import placePlayerBlock from './util/PlaceBlock';
@@ -11,16 +11,19 @@ import Scoreboard from './Scoreboard';
 import GameQuery from './GameQuery';
 import { useParams } from 'react-router';
 import axios from 'axios';
+import { SelectedBlockAtom } from './atoms/SelectedBlock';
 
 const App: React.FC = () => {
   const setGameData = useSetRecoilState<GameData>(GameDataAtom);
   const playerInfo = useRecoilValue(PlayerInfo);
+  const [selectedBlock, setSelectedBlock] = useRecoilState(SelectedBlockAtom);
 
   const params = useParams();
 
   const placeSelectedBlock = () => {
     setGameData(g => {
-      const newGameData = placePlayerBlock(g, g.blocks.find(b => b.selected));
+      // TODO: Global selected block here
+      const newGameData = placePlayerBlock(g, selectedBlock);
 
       // Post data to server
       try {

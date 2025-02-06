@@ -12,6 +12,7 @@ const createPlayerBlock = (g: GameData, player: Player, shape: number[][], x: nu
 
   return {
     // Append our player if not found
+    // TODO: Move appending player logic elsewhere
     players: ourPlayer ? g.players : g?.players?.concat([player]),
     blocks: [...placedBlocks, {
       blockId: uuid(),

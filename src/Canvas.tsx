@@ -21,6 +21,7 @@ const Canvas: React.FC = () => {
             gridSize={gridSize}
             size={gridSize}
             block={b}
+            selected={false}
           />
         })
       }

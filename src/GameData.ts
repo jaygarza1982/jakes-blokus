@@ -10,6 +10,14 @@ interface Block {
     shape: number[][];
     x: number;
     y: number;
+}
+
+interface SelectedBlock {
+    playerId: string;
+    blockNumber: number;
+    shape: number[][];
+    x: number;
+    y: number;
     selected: boolean;
 }
 
@@ -18,4 +26,4 @@ interface GameData {
     players: Player[] | undefined;
 }
 
-export type {GameData, Block, Player};
+export type {GameData, Block, Player, SelectedBlock};
