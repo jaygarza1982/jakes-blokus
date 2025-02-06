@@ -2,6 +2,15 @@ version: '3'
 
 services:
 
+  jakes-blokus-api:
+    container_name: "jakes-blokus-api"
+    build:
+      context: ./server
+    ports:
+      - 8089:3000
+    command: npm run start
+    restart: unless-stopped
+
   jakes-blokus-web:
       container_name: "jakes-blokus-web"
       build:
