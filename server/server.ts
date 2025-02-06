@@ -11,7 +11,10 @@ app.use(bodyParser.json());
 app.get('/api/game/:id', (req: Request, res: Response) => {
     const gameId = req.params.id;
 
-    const game = games.get(gameId);
+    const game = games.get(gameId) ?? {
+        "players": [],
+        "blocks": []
+    }
     console.log('GET', gameId, game);
 
     res.status(200).json(game);

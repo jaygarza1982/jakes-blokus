@@ -8,19 +8,34 @@ import './App.css'
 import BlockSelectButton from './BlockSelectButton';
 import { PlayerInfo } from './atoms/PlayerInfo';
 import Scoreboard from './Scoreboard';
+import GameQuery from './GameQuery';
+import { useParams } from 'react-router';
+import axios from 'axios';
 
 const App: React.FC = () => {
   const setGameData = useSetRecoilState<GameData>(GameDataAtom);
   const playerInfo = useRecoilValue(PlayerInfo);
 
+  const params = useParams();
+
   const placeSelectedBlock = () => {
     setGameData(g => {
-      return placePlayerBlock(g, g.blocks.find(b => b.selected));
+      const newGameData = placePlayerBlock(g, g.blocks.find(b => b.selected));
+
+      // Post data to server
+      try {
+        axios.post(`/api/game/${params?.gameId || 'NA'}`, newGameData)
+      } catch (error) {
+        console.log('Could not post game state to server', error);
+      }
+
+      return newGameData;
     })
   }
 
   return (
     <div className='game-container'>
+      <GameQuery gameId={params?.gameId || 'NA'} />
       <Scoreboard />
       <Canvas />
       <br />
