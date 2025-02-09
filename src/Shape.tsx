@@ -2,7 +2,8 @@ import React, { useRef, useState, useEffect } from 'react';
 import * as d3 from 'd3';
 import { useRecoilState, useRecoilValue } from 'recoil';
 import { GameDataAtom } from './atoms/GameData';
-import { Block, GameData } from './GameData';
+import { Block } from './GameData';
+import { SelectedBlockAtom } from './atoms/SelectedBlock';
 
 interface TileProps {
   size: number;
@@ -31,7 +32,7 @@ const Tiles: React.FC<TileProps> = ({ size, block, selected }) => {
 };
 
 const Shape: React.FC<ShapeProps> = (props: ShapeProps) => {
-  const [gameData, setGameData] = useRecoilState<GameData>(GameDataAtom);
+  const [, setSelectedBlock] = useRecoilState(SelectedBlockAtom);
 
   // Not a source of truth position. This is needed for rendering the drag
   // Logic will be done later for setting the game state, which would be the source of truth
@@ -66,23 +67,16 @@ const Shape: React.FC<ShapeProps> = (props: ShapeProps) => {
               y: snapToGrid(prevPos.x, prevPos.y).y,
             }
 
-            setGameData(g => {
-              console.log(g.blocks);
-              const blocks = [...g.blocks.filter(b => b.blockId != props.block.blockId)];
-              const newBlocks = [...blocks, {
-                ...props.block,
+            setSelectedBlock(s => {
+              const newSelectedBlock = {
+                ...s,
                 x: snapped.x,
                 y: snapped.y
-              }]
-
-              const newState = {
-                players: g.players,
-                blocks: newBlocks
               }
 
-              console.log('new state', newState);
-              
-              return newState;
+              console.log('New selected block', newSelectedBlock);
+
+              return newSelectedBlock
             });
 
             return snapped
@@ -95,7 +89,7 @@ const Shape: React.FC<ShapeProps> = (props: ShapeProps) => {
     return () => {
       d3.select(shapeRef.current).on('.drag', null);
     }
-  }, [gameData]);
+  }, []);
 
   return (
     <g

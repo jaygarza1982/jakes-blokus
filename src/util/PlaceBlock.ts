@@ -1,4 +1,4 @@
-import { Block, GameData, SelectedBlock } from '../GameData';
+import { Block, GameData, Player, SelectedBlock } from '../GameData';
 import { v4 as uuid } from 'uuid';
 
 const gridSize = 50;
@@ -87,15 +87,18 @@ const canPlaceBlock = (placedBlocks: Block[], block: SelectedBlock): boolean => 
   placingBlockMustBeDiagonalOfAnotherOwnedBlock(placedBlocks, block);
 }
 
-const placePlayerBlock = (g: GameData, block: SelectedBlock): GameData => {
+// Return a game state along with updated or not
+const placePlayerBlock = (g: GameData, player: Player, block: SelectedBlock): [GameData, boolean] => {
   // If we are given an undefined value we need to return original game state
-  if (!block) return g;
+  if (!block) return [g, false];
 
   // If we cannot place our block, return original state
-  if (!canPlaceBlock(g.blocks, block)) return g;
+  if (!canPlaceBlock(g.blocks, block)) return [g, false];
 
-  return {
-    players: g.players,
+  const ourPlayer = g.players?.find(p => p.id == player.id)
+
+  return [{
+    players: ourPlayer ? g.players : [...g?.players || [], player],
     blocks: [...g.blocks, {
       blockId: uuid(),
       blockNumber: block.blockNumber || 0,
@@ -104,7 +107,7 @@ const placePlayerBlock = (g: GameData, block: SelectedBlock): GameData => {
       x: block.x || 0,
       y: block.y || 0
     }]
-  }
+  }, true]
 }
 
 export default placePlayerBlock;

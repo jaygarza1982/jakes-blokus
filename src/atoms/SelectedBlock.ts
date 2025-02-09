@@ -7,8 +7,8 @@ export const SelectedBlockAtom = atom<SelectedBlock>({
         playerId: '',
         blockNumber: 0,
         shape: [],
-        x: 0,
-        y: 0,
+        x: 500,
+        y: 500,
         // Should denote if visible on screen
         selected: false
     }

@@ -1,8 +1,7 @@
 import React from 'react';
 import Canvas from './Canvas';
-import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil';
+import { useRecoilCallback, useRecoilState, useRecoilValue } from 'recoil';
 import { GameDataAtom } from './atoms/GameData';
-import { GameData } from './GameData';
 import placePlayerBlock from './util/PlaceBlock';
 import './App.css'
 import BlockSelectButton from './BlockSelectButton';
@@ -14,27 +13,31 @@ import axios from 'axios';
 import { SelectedBlockAtom } from './atoms/SelectedBlock';
 
 const App: React.FC = () => {
-  const setGameData = useSetRecoilState<GameData>(GameDataAtom);
   const playerInfo = useRecoilValue(PlayerInfo);
-  const [selectedBlock, setSelectedBlock] = useRecoilState(SelectedBlockAtom);
+  const [selectedBlock] = useRecoilState(SelectedBlockAtom);
 
   const params = useParams();
 
-  const placeSelectedBlock = () => {
-    setGameData(g => {
-      // TODO: Global selected block here
-      const newGameData = placePlayerBlock(g, selectedBlock);
+  const placeSelectedBlock = useRecoilCallback(({ set, snapshot }) => async () => {
+    // Get the current state before the update
+    const gameData = await snapshot.getPromise(GameDataAtom);
+    const [newGameData, updated] = placePlayerBlock(gameData, playerInfo, selectedBlock);
 
-      // Post data to server
-      try {
-        axios.post(`/api/game/${params?.gameId || 'NA'}`, newGameData)
-      } catch (error) {
-        console.log('Could not post game state to server', error);
-      }
+    // If we did not receive a valid game update, do nothing
+    if (!updated) return;
 
-      return newGameData;
-    })
-  }
+    console.log('New game state', newGameData);
+
+    set(GameDataAtom, newGameData);
+
+    try {
+      await axios.post(`/api/game/${params?.gameId || 'NA'}`, newGameData);
+    } catch (error) {
+      console.log('Could not post game state to server', error);
+    }
+
+    set(SelectedBlockAtom, s => ({ ...s, selected: false }));
+  });
 
   return (
     <div className='game-container'>
