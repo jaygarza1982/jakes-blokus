@@ -4,7 +4,7 @@ import { GameDataAtom } from './atoms/GameData';
 import { GameData, Player } from './GameData';
 
 const calcPlayerScore = (gameData: GameData, player: Player): number => {
-    return gameData.blocks.filter(b => b.playerId == player.id && !b.selected).map(b => b.shape).flat().length;
+    return gameData.blocks.filter(b => b.playerId == player.id).map(b => b.shape).flat().length;
 }
 
 const Scoreboard: React.FC = () => {

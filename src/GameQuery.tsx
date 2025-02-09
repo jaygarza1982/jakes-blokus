@@ -7,7 +7,7 @@ import { GameDataAtom } from './atoms/GameData';
 const GameQuery: React.FC<{ gameId: string }> = ({ gameId }) => {
   const setGameState = useSetRecoilState(GameDataAtom);
 
-  const { data, error, isLoading } = useQuery(
+  const { isLoading } = useQuery(
     {
         queryKey: ['gameData'],
         queryFn: async () => {
@@ -17,28 +17,12 @@ const GameQuery: React.FC<{ gameId: string }> = ({ gameId }) => {
           setGameState(response.data);
           return response.data;
         },
-        refetchInterval: 5000
+        refetchInterval: 3000
     }
   );
 
-  if (isLoading) {
-    return <div>Loading...</div>;
-  }
-
-  if (error) {
-    return <div>Error: {error.message}</div>;
-  }
-
-  if (data) {
-    return (
-      <div>
-        <h2>{data.name}</h2>
-        {/* ... other game details */}
-      </div>
-    );
-  }
-
-  return null;
+  if (isLoading) return <></>
+  return <></>
 };
 
 export default GameQuery;
