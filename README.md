@@ -8,7 +8,7 @@ This project aims to emulate the board game Blokus.
 This project has the following goals:
 
 *   **Piece Placement Logic (Complete):**  The game correctly enforces Blokus placement rules, ensuring pieces are placed legally, touching at least one corner of a previously placed piece of the same color, and not overlapping other pieces (including those of the same color). Currently, an honor system is in place for players taking turns :)
-* **Piece Rotations (Work in Progress):**  Players should be able to rotate selected pieces before confirming a placement.
+* **Piece Rotations (Complete):**  Players should be able to rotate selected pieces before confirming a placement.
 
 *   **Scoreboard (Complete):** The game accurately calculates and displays the score for each player throughout the duration of the game, based on the number of squares covered by their pieces.
 

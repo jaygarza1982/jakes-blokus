@@ -52,7 +52,7 @@ const Welcome: React.FC = () => {
         />
         <div style={{ backgroundColor: hueColor, width: '50px', height: '50px', border: '1px solid black' }} />
 
-        <button type='submit'>Host</button>
+        <button style={{ backgroundColor: hueColor, color: 'black' }} type='submit'>Host</button>
       </form>
     </div>
   );

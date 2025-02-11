@@ -14,7 +14,7 @@ import { SelectedBlockAtom } from './atoms/SelectedBlock';
 
 const App: React.FC = () => {
   const playerInfo = useRecoilValue(PlayerInfo);
-  const [selectedBlock] = useRecoilState(SelectedBlockAtom);
+  const [selectedBlock, setSelectedBlock] = useRecoilState(SelectedBlockAtom);
 
   const params = useParams();
 
@@ -39,13 +39,27 @@ const App: React.FC = () => {
     set(SelectedBlockAtom, s => ({ ...s, selected: false }));
   });
 
+  const rotateBlockLeft = () => {
+    const newBlock = selectedBlock.shape.map(([x, y]) => [y, -x]);
+    setSelectedBlock(s => ({ ...s, shape: newBlock }));
+  }
+
+  const rotateBlockRight = () => {
+    const newBlock = selectedBlock.shape.map(([x, y]) => [-y, x]);
+    setSelectedBlock(s => ({ ...s, shape: newBlock }));
+  }
+
   return (
     <div className='game-container'>
       <GameQuery gameId={params?.gameId || 'NA'} />
       <Scoreboard />
       <Canvas />
       <br />
-      <button className='place-block-button' style={{ backgroundColor: `hsl(${playerInfo.hue}, 100%, 50%)` }} onClick={placeSelectedBlock}>Place Block</button>
+      <div className='block-button-grid'>
+        <button className='rotate-block-button' style={{ backgroundColor: `hsl(${playerInfo.hue}, 100%, 50%)` }} onClick={rotateBlockLeft}>Rotate Left</button>
+        <button className='place-block-button' style={{ backgroundColor: `hsl(${playerInfo.hue}, 100%, 50%)` }} onClick={placeSelectedBlock}>Place Block</button>
+        <button className='rotate-block-button' style={{ backgroundColor: `hsl(${playerInfo.hue}, 100%, 50%)` }} onClick={rotateBlockRight}>Rotate Right</button>
+      </div>
       <br />
       <BlockSelectButton blockNumber={1}  player={playerInfo} blockShape={[[0, 0]]} />
       <BlockSelectButton blockNumber={2}  player={playerInfo} blockShape={[[0, 0], [1, 0]]} />
