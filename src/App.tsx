@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import Canvas from './Canvas';
 import { useRecoilCallback, useRecoilState, useRecoilValue } from 'recoil';
 import { GameDataAtom } from './atoms/GameData';
@@ -8,7 +8,7 @@ import BlockSelectButton from './BlockSelectButton';
 import { PlayerInfo } from './atoms/PlayerInfo';
 import Scoreboard from './Scoreboard';
 import GameQuery from './GameQuery';
-import { useParams } from 'react-router';
+import { useParams, useNavigate } from 'react-router';
 import axios from 'axios';
 import { SelectedBlockAtom } from './atoms/SelectedBlock';
 
@@ -17,6 +17,12 @@ const App: React.FC = () => {
   const [selectedBlock, setSelectedBlock] = useRecoilState(SelectedBlockAtom);
 
   const params = useParams();
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    // Redirect to the pregame info screen if the player info has not been filled out yet
+    playerInfo.id === '' && navigate(`/pregame-info/${params.gameId || 'NA'}`);
+  }, []);
 
   const placeSelectedBlock = useRecoilCallback(({ set, snapshot }) => async () => {
     // Get the current state before the update

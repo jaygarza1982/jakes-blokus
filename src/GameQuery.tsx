@@ -17,7 +17,7 @@ const GameQuery: React.FC<{ gameId: string }> = ({ gameId }) => {
           setGameState(response.data);
           return response.data;
         },
-        refetchInterval: 3000
+        refetchInterval: 1000
     }
   );
 

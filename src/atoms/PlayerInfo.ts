@@ -24,11 +24,13 @@ const localStorageEffect = <T>(key: string) => ({ setSelf, onSet }: { setSelf: (
     });
 };
 
+const randomHue = () => Math.floor(Math.random() * 360);
+
 export const PlayerInfo = atom<Player>({
     key: 'playerInfo',
     default: {
         id: '',
-        hue: 0,
+        hue: randomHue(),
     },
     effects: [localStorageEffect('playerInfo')]
 });

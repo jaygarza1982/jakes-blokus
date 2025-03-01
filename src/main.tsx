@@ -16,6 +16,8 @@ createRoot(document.getElementById('root')!).render(
       <BrowserRouter>
         <Routes>
           <Route path='/' element={<Welcome />} />
+          {/* Screen to force player to put info before joining a game */}
+          <Route path='/pregame-info/:gameId' element={<Welcome />} />
           <Route path='/game/:gameId' element={<App />} />
         </Routes>
       </BrowserRouter>

@@ -1,11 +1,12 @@
 import React from 'react';
-import { useNavigate } from 'react-router';
+import { useParams, useNavigate } from 'react-router';
 import { v4 as uuid } from 'uuid';
 import { PlayerInfo } from './atoms/PlayerInfo';
 import { useRecoilState } from 'recoil';
 
 const Welcome: React.FC = () => {
   const navigate = useNavigate();
+  const params = useParams();
 
   const [playerInfo, setPlayerInfo] = useRecoilState(PlayerInfo);
 
@@ -19,6 +20,14 @@ const Welcome: React.FC = () => {
 
   const handleSubmit = (event: React.FormEvent) => {
     event.preventDefault();
+
+    // If we are in pregame-info, navigate to the game
+    if (params.gameId) {
+      navigate(`/game/${params.gameId}`);
+      return;
+    }
+
+    // Create new game if we are not in pregame
     navigate(`/game/${uuid()}`);
   };
 
@@ -52,7 +61,7 @@ const Welcome: React.FC = () => {
         />
         <div style={{ backgroundColor: hueColor, width: '50px', height: '50px', border: '1px solid black' }} />
 
-        <button style={{ backgroundColor: hueColor, color: 'black' }} type='submit'>Host</button>
+        <button style={{ backgroundColor: hueColor, color: 'black' }} type='submit'>Join</button>
       </form>
     </div>
   );
