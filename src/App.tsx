@@ -55,6 +55,16 @@ const App: React.FC = () => {
     setSelectedBlock(s => ({ ...s, shape: newBlock }));
   }
 
+  const mirrorBlockX = () => {
+    const newBlock = selectedBlock.shape.map(([x, y]) => [-x, y]);
+    setSelectedBlock(s => ({ ...s, shape: newBlock }));
+  }
+
+  const mirrorBlockY = () => {
+    const newBlock = selectedBlock.shape.map(([x, y]) => [x, -y]);
+    setSelectedBlock(s => ({ ...s, shape: newBlock }));
+  }
+
   return (
     <div className='game-container'>
       <GameQuery gameId={params?.gameId || 'NA'} />
@@ -65,6 +75,12 @@ const App: React.FC = () => {
         <button className='rotate-block-button' style={{ backgroundColor: `hsl(${playerInfo.hue}, 100%, 50%)` }} onClick={rotateBlockLeft}>Rotate Left</button>
         <button className='place-block-button' style={{ backgroundColor: `hsl(${playerInfo.hue}, 100%, 50%)` }} onClick={placeSelectedBlock}>Place Block</button>
         <button className='rotate-block-button' style={{ backgroundColor: `hsl(${playerInfo.hue}, 100%, 50%)` }} onClick={rotateBlockRight}>Rotate Right</button>
+      </div>
+      <br />
+      <div className='block-button-grid'>
+        {/* Mirror block buttons */}
+        <button className='mirror-block-button' style={{ backgroundColor: `hsl(${playerInfo.hue}, 100%, 50%)` }} onClick={mirrorBlockX}>Mirror X</button>
+        <button className='mirror-block-button' style={{ backgroundColor: `hsl(${playerInfo.hue}, 100%, 50%)` }} onClick={mirrorBlockY}>Mirror Y</button>
       </div>
       <br />
       <BlockSelectButton blockNumber={1}  player={playerInfo} blockShape={[[0, 0]]} />
