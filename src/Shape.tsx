@@ -32,7 +32,7 @@ const Tiles: React.FC<TileProps> = ({ size, block, selected }) => {
 };
 
 const Shape: React.FC<ShapeProps> = (props: ShapeProps) => {
-  const [, setSelectedBlock] = useRecoilState(SelectedBlockAtom);
+  const [selectedBlock, setSelectedBlock] = useRecoilState(SelectedBlockAtom);
 
   // Not a source of truth position. This is needed for rendering the drag
   // Logic will be done later for setting the game state, which would be the source of truth
@@ -61,10 +61,29 @@ const Shape: React.FC<ShapeProps> = (props: ShapeProps) => {
           });
         })
         .on('end', () => {
+          const width = 1000;
+          const height = 1000;
+          const cellSize = 50;
+          const getBlockGridPositions = (pos: {x: number, y: number}): number[][] => {
+            return props.block.shape.map(
+              p => [(p[0] * cellSize) + pos.x, (p[1] * cellSize) + pos.y]
+            );
+          }
+
           setPosition(prevPos => {
             const snapped = {
               x: snapToGrid(prevPos.x, prevPos.y).x,
               y: snapToGrid(prevPos.x, prevPos.y).y,
+            }
+
+            // Return `selectedBlock` if any of the snapped positions are out of bounds
+            const blockGridPositions = getBlockGridPositions(snapped);
+            console.log('Block grid positions', blockGridPositions);
+            
+            const positionOutOfBounds = blockGridPositions.find(p => p[0] < 0 || p[0] >= width || p[1] < 0 || p[1] >= height);
+            if (positionOutOfBounds) {
+              console.log('Position out of bounds', positionOutOfBounds);
+              return selectedBlock;
             }
 
             setSelectedBlock(s => {
@@ -89,7 +108,7 @@ const Shape: React.FC<ShapeProps> = (props: ShapeProps) => {
     return () => {
       d3.select(shapeRef.current).on('.drag', null);
     }
-  }, []);
+  }, [selectedBlock]);
 
   return (
     <g
